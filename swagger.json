@@ -1,0 +1,208 @@
+{
+	"openapi": "3.1.0",
+	"info": {
+		"title": "Ticket Booking API",
+		"description": "REST APIs for Ticket Booking System",
+		"version": "1.0"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8080",
+			"description": "Generated server url"
+		}
+	],
+	"paths": {
+		"/ticket": {
+			"post": {
+				"tags": [
+					"ticket-controller"
+				],
+				"operationId": "bookTicket",
+				"requestBody": {
+					"content": {
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Passenger"
+							}
+						},
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Passenger"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/tickets": {
+			"get": {
+				"tags": [
+					"ticket-controller"
+				],
+				"operationId": "getAllTickets",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Ticket"
+									}
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Ticket"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/tickets/{tickid}": {
+			"get": {
+				"tags": [
+					"ticket-controller"
+				],
+				"operationId": "getTicket",
+				"parameters": [
+					{
+						"name": "tickid",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"type": "object"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/tickets/{tickid}/download": {
+			"get": {
+				"tags": [
+					"ticket-controller"
+				],
+				"operationId": "downloadTicket",
+				"parameters": [
+					{
+						"name": "tickid",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "object"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Passenger": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"age": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"from": {
+						"type": "string"
+					},
+					"to": {
+						"type": "string"
+					},
+					"date": {
+						"type": "string"
+					}
+				}
+			},
+			"Ticket": {
+				"type": "object",
+				"properties": {
+					"ticketId": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"from": {
+						"type": "string"
+					},
+					"to": {
+						"type": "string"
+					},
+					"trainnum": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string",
+						"enum": [
+							"CONFIRMED",
+							"CANCELLED"
+						]
+					},
+					"price": {
+						"type": "integer",
+						"format": "int32"
+					}
+				}
+			}
+		}
+	}
+}
